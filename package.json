@@ -1,0 +1,28 @@
+{
+    "name": "Yui-Bot",
+    "version": "1.0.4",
+    "description": "A Discord Bot for calling chatgpt using NodeJS",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": "Amos Ayomide (amosayomide05)",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@discordjs/voice": "latest",
+        "discord-speech-recognition": "latest",
+        "google-tts-api": "latest",
+        "ffmpeg-static": "latest",
+        "tweetnacl": "latest",
+        "openai": "latest",
+        "request": "latest"
+    },
+    "homepage": "https://github.com/amosayomide05/discord-voice",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/amosayomide05/discord-voice.git"
+    },
+    "bugs": {
+        "url": "https://github.com/amosayomide05/discord-voice/issues"
+    }
+}
