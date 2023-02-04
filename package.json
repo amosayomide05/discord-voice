@@ -7,7 +7,7 @@
         "start": "node index.js"
     },
     "author": "Amos Ayomide (amosayomide05)",
-    "license": "GPL-3.0",
+    "license": "MIT",
     "dependencies": {
         "@discordjs/voice": "latest",
         "discord-speech-recognition": "latest",
