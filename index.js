@@ -1,4 +1,3 @@
-const googleTTS = require('google-tts-api');
 const request = require('request');
 const fs = require('fs');
 const axios = require('axios');
@@ -18,6 +17,7 @@ const client = new Client({
 
 const text_channel_id = "";
 const channel_id = "";
+const elevenkey = "";
 
 addSpeechEvent(client);
 let options = { json: true };
@@ -52,6 +52,9 @@ client.on("speech", (msg) => {
 
 
             let responseStr = response.trim();
+            if(responseStr > 5000){
+           let responseStr = responseStr.substring(0, 4999);
+            }
             if (responseStr.includes("|")) {
                 let responseStr = responseStr.replace("|", "");
             }
@@ -59,42 +62,30 @@ client.on("speech", (msg) => {
 
 
 
-            const text = responseStr;
+axios({
+  method: 'post',
+  url: 'https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream',
+  data: { text: ai_res },
+  headers: {
+    'Accept': 'audio/mpeg',
+    'xi-api-key': elevenkey,
+    'Content-Type': 'application/json',
+  },
+  responseType: 'stream'
+})
+  .then(response => {
+    response.data.pipe(fs.createWriteStream('audio.mp3'));
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
-            if (text.length > 200) {
-                let originalString = text;
-                let parts = [];
-                let partLength = 200;
-
-                for (let i = 0; i < originalString.length; i += partLength) {
-                    parts.push(originalString.slice(i, i + partLength));
-                }
-                const player = createAudioPlayer();
-                const language = 'en-GB';
-                connection.subscribe(player);
-
-                for (let i = 0; i < parts.length; i++) {
-                    var part_text = parts[i];
-
-                    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURI(part_text)}&tl=${language}&total=1&idx=0&client=tw-ob&ttsspeed=1`;
-
-
-                    const resource = createAudioResource(ttsUrl);
-
-                    player.play(resource);
-                }
-
-
-            }
-            else {
-                const language = 'en-GB';
-                const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURI(text)}&tl=${language}&total=1&idx=0&client=tw-ob&ttsspeed=1`;
 
                 const player = createAudioPlayer();
-                const resource = createAudioResource(ttsUrl);
+                const resource = createAudioResource("audio.mp3");
                 connection.subscribe(player);
                 player.play(resource);
-            }
+            
 
         }
     });
