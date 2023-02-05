@@ -3,7 +3,8 @@
 ## How to deploy
 
 ### Locally
-Edit `index.js` and add your bot token, channel id and text channel id
+Edit `index.js` and add your bot token, channel id and text channel id and elevenlab
+[How to set up elevenlab](https://www.npmjs.com/package/elevenlabs-api)
 
 Execute the command
 
