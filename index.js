@@ -61,10 +61,10 @@ client.on("speech", (msg) => {
             var ai_res = responseStr;
 
 
-
+var voice_id = ""; //read Readme.md
 axios({
   method: 'post',
-  url: 'https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream',
+  url: 'https://api.elevenlabs.io/v1/text-to-speech/${voice_id}/stream',
   data: { text: ai_res },
   headers: {
     'Accept': 'audio/mpeg',
@@ -74,18 +74,15 @@ axios({
   responseType: 'stream'
 })
   .then(response => {
-    response.data.pipe(fs.createWriteStream('audio.mp3'));
+   const player = createAudioPlayer();
+                const resource = createAudioResource(response.data);
+                connection.subscribe(player);
+                player.play(resource);
+    
   })
   .catch(error => {
     console.error(error);
   });
-
-
-                const player = createAudioPlayer();
-                const resource = createAudioResource("audio.mp3");
-                connection.subscribe(player);
-                player.play(resource);
-            
 
         }
     });
@@ -98,7 +95,7 @@ client.on("ready", () => {
     console.log("Ready!");
 });
 
-client.login('Yuor-Bot-Token-Here');
+client.login('Your-Bot-Token-Here');
 
 
 //Prevent pm2 crash on error
